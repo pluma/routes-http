@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="routes-http : Simple but powerful HTTP request router" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>routes-http</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/pluma/routes-http">View on GitHub</a>
+
+          <h1 id="project_title">routes-http</h1>
+          <h2 id="project_tagline">Simple but powerful HTTP request router</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/pluma/routes-http/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/pluma/routes-http/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="synopsis" class="anchor" href="#synopsis"><span class="octicon octicon-link"></span></a>Synopsis</h1>
+
+<p><strong>routes-http</strong> is a simple HTTP request router for node.js based on <a href="https://github.com/aaronblohowiak/routes.js">routes</a>.</p>
+
+<p><a href="https://travis-ci.org/pluma/routes-http"><img src="https://travis-ci.org/pluma/routes-http.png?branch=master" alt="Build Status"></a> <a href="http://badge.fury.io/js/routes-http"><img src="https://badge.fury.io/js/routes-http.png" alt="NPM version"></a> <a href="https://david-dm.org/pluma/routes-http"><img src="https://david-dm.org/pluma/routes-http.png" alt="Dependencies"></a></p>
+
+<h1>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h1>
+
+<h2>
+<a name="simple-but-powerful" class="anchor" href="#simple-but-powerful"><span class="octicon octicon-link"></span></a>Simple but powerful</h2>
+
+<p><em>routes-http</em> is just a thin wrapper around <em>routes</em>. This means if you've used <em>routes</em> or routes-based routers before, you can start using <em>routes-http</em> right away:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'routes-http'</span><span class="p">)();</span>
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/foo/:arg/*'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">opts</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">opts</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// … more code …</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="s1">'/foo/bar/qux/baz'</span><span class="p">;</span>
+<span class="nx">routes</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+<span class="cm">/*</span>
+<span class="cm">{</span>
+<span class="cm">    params: {arg: 'bar'},</span>
+<span class="cm">    splats: ['qux/baz']</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+</pre></div>
+
+<h2>
+<a name="chaining-api" class="anchor" href="#chaining-api"><span class="octicon octicon-link"></span></a>Chaining API</h2>
+
+<p>You can create a router and add all your routes in a single line. No more repeating yourself! The following is perfectly valid:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'routes-http'</span><span class="p">)()</span>
+    <span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">})</span>
+    <span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/bar'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">})</span>
+    <span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/qux'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">});</span>
+<span class="c1">// … more code …</span>
+<span class="nx">routes</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+</pre></div>
+
+<h2>
+<a name="semantic-error-handling" class="anchor" href="#semantic-error-handling"><span class="octicon octicon-link"></span></a>Semantic error-handling</h2>
+
+<p><em>routes-http</em> uses <a href="https://github.com/pluma/httperr">httperr</a> for its own errors and allows you to provide an error handler that will be used for all errors, including matching errors:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'routes-http'</span><span class="p">)();</span>
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">});</span>
+<span class="c1">// … more code …</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="s1">'http://localhost/foo'</span><span class="p">;</span>
+<span class="nx">routes</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="cm">/*</span>
+<span class="cm">{ [NotFound]</span>
+<span class="cm">    title: 'Not Found',</span>
+<span class="cm">    name: 'NotFound',</span>
+<span class="cm">    code: 'NOT_FOUND',</span>
+<span class="cm">    statusCode: 404</span>
+<span class="cm">}</span>
+<span class="cm">*/</span>
+</pre></div>
+
+<h2>
+<a name="pain-free-nesting" class="anchor" href="#pain-free-nesting"><span class="octicon octicon-link"></span></a>Pain-free nesting</h2>
+
+<p>Want to use a separate router for each namespace of your app? No problem. Nesting routes is as simple as defining normal routes. They don't even need to know about each other or that they are nested in order to work:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'routes-http'</span><span class="p">),</span>
+    <span class="nx">routes</span> <span class="o">=</span> <span class="nx">router</span><span class="p">(),</span>
+    <span class="nx">childRoutes</span> <span class="o">=</span> <span class="nx">router</span><span class="p">();</span>
+
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/hello/'</span><span class="p">,</span> <span class="nx">childRoutes</span><span class="p">);</span> <span class="c1">// Always use a trailing slash!</span>
+<span class="nx">childRoutes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/world'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">'Hello from /hello/world !'</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="http-method-dispatching" class="anchor" href="#http-method-dispatching"><span class="octicon octicon-link"></span></a>HTTP method dispatching</h2>
+
+<p>Want to have different views for each HTTP method? Just specify an object instead of a function:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'routes-http'</span><span class="p">)();</span>
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">GET</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">'You used GET'</span><span class="p">);},</span>
+    <span class="nx">POST</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">'You used POST'</span><span class="p">)}</span>
+<span class="p">});</span>
+
+<span class="cm">/* … more code … */</span>
+
+<span class="nx">routes</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">===</span> <span class="mi">405</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="p">{</span><span class="s1">'Allowed'</span><span class="o">:</span> <span class="nx">err</span><span class="p">.</span><span class="nx">allowed</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">','</span><span class="p">)});</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">'You used '</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">method</span> <span class="o">+</span> <span class="s1">'\n'</span><span class="p">);</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">'Allowed methods: '</span> <span class="o">+</span> <span class="nx">err</span><span class="p">.</span><span class="nx">allowed</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">', '</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'\n'</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="nx">err</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+<div class="highlight highlight-sh"><pre><span class="nv">$ </span>curl http://localhost:8000/foo
+You used GET
+<span class="nv">$ </span>curl -X POST http://localhost:8000/foo
+You used POST
+<span class="nv">$ </span>curl -X DELETE http://localhost:8000/foo
+You used DELETE
+Allowed methods: GET, POST
+405 Method Not Allowed
+</pre></div>
+
+<h2>
+<a name="minimalistic-requirements" class="anchor" href="#minimalistic-requirements"><span class="octicon octicon-link"></span></a>Minimalistic requirements</h2>
+
+<p>Want to use the router without passing in request and response objects? You can do that.</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'routes-http'</span><span class="p">)();</span>
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">});</span>
+<span class="nx">routes</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span> <span class="s1">'http://localhost/foo'</span><span class="p">});</span> <span class="c1">// Works!</span>
+<span class="nx">routes</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">);</span> <span class="c1">// Also works!</span>
+</pre></div>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'routes-http'</span><span class="p">)();</span>
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">});</span>
+<span class="nx">routes</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">,</span> <span class="p">{</span><span class="nx">proprietary</span><span class="o">:</span> <span class="s1">'data-structure'</span><span class="p">});</span> <span class="c1">// Works!</span>
+</pre></div>
+
+<h1>
+<a name="basic-usage-example" class="anchor" href="#basic-usage-example"><span class="octicon octicon-link"></span></a>Basic Usage Example</h1>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'routes-http'</span><span class="p">),</span>
+    <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'http'</span><span class="p">),</span>
+    <span class="nx">routes</span> <span class="o">=</span> <span class="nx">router</span><span class="p">();</span>
+
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/hello/world'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">'Hello world!'</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/throws'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">routes</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">&amp;&amp;</span> <span class="nx">err</span><span class="p">.</span><span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s1">' '</span> <span class="o">+</span> <span class="nx">err</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s1">'Internal Server Error'</span><span class="p">);</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">'An error occurred'</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8000</span><span class="p">);</span>
+</pre></div>
+
+<div class="highlight highlight-sh"><pre><span class="nv">$ </span>curl http://localhost:8000/hello/world
+Hello World!
+<span class="nv">$ </span>curl http://localhost:8000/does/not/exist
+404 Not Found
+<span class="nv">$ </span>curl Http://localhost:8000/throws
+An error occurred
+</pre></div>
+
+<h1>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h1>
+
+<h2>
+<a name="with-npm" class="anchor" href="#with-npm"><span class="octicon octicon-link"></span></a>With NPM</h2>
+
+<div class="highlight highlight-sh"><pre>npm install routes-http
+</pre></div>
+
+<h2>
+<a name="from-source" class="anchor" href="#from-source"><span class="octicon octicon-link"></span></a>From source</h2>
+
+<div class="highlight highlight-sh"><pre>git clone https://github.com/pluma/routes-http.git
+<span class="nb">cd </span>routes-http
+npm install
+make <span class="nb">test</span>
+</pre></div>
+
+<h1>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h1>
+
+<h2>
+<a name="routesreq-res-handleerrorfunction" class="anchor" href="#routesreq-res-handleerrorfunction"><span class="octicon octicon-link"></span></a>routes(req, [res], [handleError:Function])</h2>
+
+<p>Resolves the given request and invokes the matching view if possible.</p>
+
+<p>If a <code>handleError</code> function is passed, the view will be called in the context of a node.js <code>domain</code> and the function will be called with the <code>Error</code> object if an error is raised by the view.</p>
+
+<p>The matched view will be invoked with the following arguments:</p>
+
+<h3>
+<a name="req" class="anchor" href="#req"><span class="octicon octicon-link"></span></a>req</h3>
+
+<p>The original request.</p>
+
+<h3>
+<a name="res" class="anchor" href="#res"><span class="octicon octicon-link"></span></a>res</h3>
+
+<p>The original response.</p>
+
+<h3>
+<a name="opts" class="anchor" href="#opts"><span class="octicon octicon-link"></span></a>opts</h3>
+
+<p>An object with two properties:</p>
+
+<h4>
+<a name="optsparams" class="anchor" href="#optsparams"><span class="octicon octicon-link"></span></a>opts.params</h4>
+
+<p>An object containing the matched route params. For child routes, the object will contain params matched by their parent routes as well, but child routes will take precedence over parent routes when params are named identically.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">childRoutes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/:foo'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">opts</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">});</span>
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/:foo/'</span><span class="p">,</span> <span class="nx">childRoutes</span><span class="p">);</span>
+<span class="nx">routes</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span> <span class="s1">'/qux/bar'</span><span class="p">});</span> <span class="c1">// opts.params = {'foo': 'bar'}</span>
+</pre></div>
+
+<h4>
+<a name="optssplats" class="anchor" href="#optssplats"><span class="octicon octicon-link"></span></a>opts.splats</h4>
+
+<p>An array containing the matched route splats. For child routes, the array will contain splats matched by their parent routes as well, with child routes' splats appearing at the end of the array.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">childRoutes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/*'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">opts</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">});</span>
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/*/foo/'</span><span class="p">,</span> <span class="nx">childRoutes</span><span class="p">);</span>
+<span class="nx">routes</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span> <span class="s1">'/qux/foo/bar'</span><span class="p">});</span> <span class="c1">// opts.splats = ['qux', 'bar']</span>
+</pre></div>
+
+<h2>
+<a name="routesaddroutepathstring-viewfunction" class="anchor" href="#routesaddroutepathstring-viewfunction"><span class="octicon octicon-link"></span></a>routes.addRoute(path:String, view:Function)</h2>
+
+<p>Adds a route with the given path. The route will resolve to the given function, invoking it when the route is matched.</p>
+
+<p>If the route can not be resolved, a <code>404 Not Found</code> error will be raised.</p>
+
+<h2>
+<a name="routesaddroutepathstring-viewobject" class="anchor" href="#routesaddroutepathstring-viewobject"><span class="octicon octicon-link"></span></a>routes.addRoute(path:String, view:Object)</h2>
+
+<p>Adds a route with the given path. The object is expected to have methods named after the HTTP methods supported by the view that will be invoked when the route is matched with the respective HTTP method.</p>
+
+<p>If the route is resolved, but the view object has no matching property for the request's HTTP method, a <code>405 Method Not Allowed</code> error will be raised with an array containing the names of the supported HTTP methods as its <code>allowed</code> property.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/foo/bar'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">GET</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Always use uppercase!</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">'You have sent a GET request.'</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">POST</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">'You have sent a POST request'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="routesaddroutepathstring-viewroutes" class="anchor" href="#routesaddroutepathstring-viewroutes"><span class="octicon octicon-link"></span></a>routes.addRoute(path:String, view:routes)</h2>
+
+<p>Adds a route with the given path prefix. When the route is matched, the prefix will be replaced by a slash and the resulting URL will be passed to the given routes function.</p>
+
+<p>Example:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">childRoutes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/bar'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">'You have accessed /foo/bar !'</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/foo/'</span><span class="p">,</span> <span class="nx">childRoutes</span><span class="p">);</span> <span class="c1">// Always use a trailing slash!</span>
+</pre></div>
+
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>The MIT/Expat license.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">routes-http maintained by <a href="https://github.com/pluma">pluma</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
