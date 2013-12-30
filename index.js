@@ -1,7 +1,6 @@
 /*! routes-http 0.1.0 Copyright (c) 2013 Alan Plum. MIT licensed. @preserve */
 var httperr = require('httperr');
 var router = require('routes');
-var domain = require('domain');
 var parseUrl = require('url').parse;
 
 module.exports = function() {
@@ -28,11 +27,11 @@ module.exports = function() {
       opts = undefined;
     }
     if (handleError) {
-      var d = domain.create();
-      d.on('error', handleError);
-      d.run(function() {
-        process.nextTick(d.bind(runRoute));
-      });
+      try {
+        runRoute();
+      } catch(err) {
+        handleError(err);
+      }
     } else {
       runRoute();
     }
