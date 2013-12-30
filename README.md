@@ -188,7 +188,7 @@ make test
 
 Resolves the given request and invokes the matching view if possible.
 
-If a `handleError` function is passed, the view will be called in the context of a node.js `domain` and the function will be called with the `Error` object if an error is raised by the view.
+If a `handleError` function is passed, the function will be called with the `Error` object if an error is thrown by the view.
 
 The matched view will be invoked with the following arguments:
 
