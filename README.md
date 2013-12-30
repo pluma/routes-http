@@ -91,7 +91,7 @@ routes.addRoute('/foo', {
 
 routes(req, res, function(err) {
     if (err.statusCode === 405) {
-        res.writeHead(err.statusCode, err.title, {'Allowed': err.allowed.join(',')});
+        res.writeHead(err.statusCode, err.title, {'Allow': err.allowed.join(', ')});
         res.write('You used ' + req.method + '\n');
         res.write('Allowed methods: ' + err.allowed.join(', ') + '\n');
     } else {
