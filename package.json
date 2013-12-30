@@ -12,6 +12,8 @@
     "routes",
     "router",
     "routing",
+    "request",
+    "url",
     "http"
   ],
   "dependencies": {
