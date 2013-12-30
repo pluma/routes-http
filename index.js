@@ -31,7 +31,9 @@ module.exports = function() {
       var d = domain.create();
       d.on('error', handleError);
       d.run(function() {
-        process.nextTick(runRoute); // meh?
+        process.nextTick(function() {
+          runRoute();
+        });
       });
     } else {
       runRoute();
