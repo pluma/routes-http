@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="routes-http : Simple but powerful HTTP request router" />
+    <meta name="description" content="routes-http : simple but powerful HTTP request router" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/pluma/routes-http">View on GitHub</a>
 
           <h1 id="project_title">routes-http</h1>
-          <h2 id="project_tagline">Simple but powerful HTTP request router</h2>
+          <h2 id="project_tagline">simple but powerful HTTP request router</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/pluma/routes-http/zipball/master">Download this project as a .zip file</a>
@@ -126,7 +126,7 @@
 
 <span class="nx">routes</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">===</span> <span class="mi">405</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="p">{</span><span class="s1">'Allowed'</span><span class="o">:</span> <span class="nx">err</span><span class="p">.</span><span class="nx">allowed</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">','</span><span class="p">)});</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">statusCode</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="p">{</span><span class="s1">'Allow'</span><span class="o">:</span> <span class="nx">err</span><span class="p">.</span><span class="nx">allowed</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">', '</span><span class="p">)});</span>
         <span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">'You used '</span> <span class="o">+</span> <span class="nx">req</span><span class="p">.</span><span class="nx">method</span> <span class="o">+</span> <span class="s1">'\n'</span><span class="p">);</span>
         <span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s1">'Allowed methods: '</span> <span class="o">+</span> <span class="nx">err</span><span class="p">.</span><span class="nx">allowed</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">', '</span><span class="p">)</span> <span class="o">+</span> <span class="s1">'\n'</span><span class="p">);</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -223,7 +223,7 @@ make <span class="nb">test</span>
 
 <p>Resolves the given request and invokes the matching view if possible.</p>
 
-<p>If a <code>handleError</code> function is passed, the view will be called in the context of a node.js <code>domain</code> and the function will be called with the <code>Error</code> object if an error is raised by the view.</p>
+<p>If a <code>handleError</code> function is passed, the function will be called with the <code>Error</code> object if an error is thrown by the view.</p>
 
 <p>The matched view will be invoked with the following arguments:</p>
 
