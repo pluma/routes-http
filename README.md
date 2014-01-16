@@ -2,7 +2,7 @@
 
 **routes-http** is a simple HTTP request router for node.js based on [routes](https://github.com/aaronblohowiak/routes.js).
 
-[![Build Status](https://travis-ci.org/pluma/routes-http.png?branch=master)](https://travis-ci.org/pluma/routes-http) [![NPM version](https://badge.fury.io/js/routes-http.png)](http://badge.fury.io/js/routes-http) [![Dependencies](https://david-dm.org/pluma/routes-http.png)](https://david-dm.org/pluma/routes-http)
+[![Build Status](https://travis-ci.org/pluma/routes-http.png?branch=master)](https://travis-ci.org/pluma/routes-http) [![Coverage Status](https://coveralls.io/repos/pluma/routes-http/badge.png?branch=master)](https://coveralls.io/r/pluma/routes-http?branch=master) [![NPM version](https://badge.fury.io/js/routes-http.png)](http://badge.fury.io/js/routes-http) [![Dependencies](https://david-dm.org/pluma/routes-http.png)](https://david-dm.org/pluma/routes-http)
 
 # Features
 
@@ -266,6 +266,6 @@ childRoutes.addRoute('/bar', function(req, res) {
 routes.addRoute('/foo/', childRoutes); // Always use a trailing slash!
 ```
 
-# License
+# Unlicense
 
-The MIT/Expat license.
+This is free and unencumbered public domain software. For more information, see http://unlicense.org/ or the accompanying [UNLICENSE](https://github.com/pluma/routes-http/blob/master/UNLICENSE) file.

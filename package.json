@@ -1,8 +1,12 @@
 {
   "name": "routes-http",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Alan Plum <me@pluma.io>",
   "description": "Simple but powerful HTTP request router",
+  "licenses": {
+    "type": "UNLICENSE",
+    "url": "https://github.com/pluma/routes-http/blob/master/UNLICENSE"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/pluma/routes-http.git"
@@ -18,16 +22,18 @@
   ],
   "dependencies": {
     "routes": "~0.2",
-    "httperr": "~0.1"
+    "httperr": "~0.2"
   },
   "devDependencies": {
-    "mocha": "~1.16",
+    "mocha": "~1.17",
+    "istanbul": "~0.2",
+    "coveralls": "~2.6",
     "expect.js": "~0.2",
     "jshint": "~2.4"
   },
-  "license": "MIT",
   "main": "index.js",
   "scripts": {
+    "coveralls": "make coveralls",
     "test": "make test"
   },
   "engines": {

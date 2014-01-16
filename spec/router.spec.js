@@ -15,6 +15,31 @@ describe('router()', function() {
   });
 });
 
+describe('request as string', function() {
+  it('treats the string as URL', function(done) {
+    var routes = router(),
+      res = {},
+      callback = function(url, data) {
+        expect(url).to.equal('/foo');
+        expect(data).to.equal(res);
+        done();
+      };
+    routes.addRoute('/foo', callback);
+    routes('/foo', res);
+  });
+});
+
+describe('called without response object', function() {
+  it('passes the failure callback correctly', function(done) {
+    var routes = router(),
+      callback = function(err) {
+        expect(err).to.be.an(Error);
+        done();
+      };
+    routes({url: '404'}, callback);
+  });
+});
+
 describe('route with no match', function() {
   it('calls the failure callback', function(done) {
     var routes = router(),

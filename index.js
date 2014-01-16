@@ -1,4 +1,4 @@
-/*! routes-http 0.1.0 Copyright (c) 2013 Alan Plum. MIT licensed. @preserve */
+/*! routes-http 0.2.0 Original author Alan Plum <me@pluma.io>. Released into the Public Domain under the UNLICENSE. @preserve */
 var httperr = require('httperr');
 var router = require('routes');
 var parseUrl = require('url').parse;
