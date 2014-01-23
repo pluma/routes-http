@@ -2,7 +2,12 @@
 
 **routes-http** is a simple HTTP request router for node.js based on [routes](https://github.com/aaronblohowiak/routes.js).
 
-[![Build Status](https://travis-ci.org/pluma/routes-http.png?branch=master)](https://travis-ci.org/pluma/routes-http) [![Coverage Status](https://coveralls.io/repos/pluma/routes-http/badge.png?branch=master)](https://coveralls.io/r/pluma/routes-http?branch=master) [![NPM version](https://badge.fury.io/js/routes-http.png)](http://badge.fury.io/js/routes-http) [![Dependencies](https://david-dm.org/pluma/routes-http.png)](https://david-dm.org/pluma/routes-http)
+[![stability 2 - unstable](http://b.repl.ca/v1/stability-2_--_unstable-yellow.png)
+](http://nodejs.org/api/documentation.html#documentation_stability_index) [![license - Unlicense](http://b.repl.ca/v1/license-Unlicense-lightgrey.png)](http://unlicense.org/)
+
+[![Build Status](https://travis-ci.org/pluma/routes-http.png?branch=master)](https://travis-ci.org/pluma/routes-http) [![Coverage Status](https://coveralls.io/repos/pluma/routes-http/badge.png?branch=master)](https://coveralls.io/r/pluma/routes-http?branch=master) [![Dependencies](https://david-dm.org/pluma/routes-http.png?theme=shields.io)](https://david-dm.org/pluma/routes-http)
+
+[![NPM status](https://nodei.co/npm/routes-http.png?compact=true)](https://npmjs.org/package/routes-http)
 
 # Features
 
