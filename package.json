@@ -1,6 +1,6 @@
 {
   "name": "routes-http",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Alan Plum <me@pluma.io>",
   "description": "Simple but powerful HTTP request router",
   "licenses": {
@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "routes": "~0.2",
-    "httperr": "~0.3"
+    "httperr": "~0.4"
   },
   "devDependencies": {
     "mocha": "~1.17",

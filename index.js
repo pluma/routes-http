@@ -1,4 +1,4 @@
-/*! routes-http 0.3.0 Original author Alan Plum <me@pluma.io>. Released into the Public Domain under the UNLICENSE. @preserve */
+/*! routes-http 0.4.0 Original author Alan Plum <me@pluma.io>. Released into the Public Domain under the UNLICENSE. @preserve */
 var httperr = require('httperr');
 var router = require('routes');
 var parseUrl = require('url').parse;
