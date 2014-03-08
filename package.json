@@ -1,6 +1,6 @@
 {
   "name": "routes-http",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": "Alan Plum <me@pluma.io>",
   "description": "Simple but powerful HTTP request router",
   "licenses": {

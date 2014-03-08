@@ -13,6 +13,46 @@ describe('router()', function() {
     var routes = router();
     expect(routes.addRoute('/foo', {})).to.equal(routes);
   });
+  it('has a method "addRoutes"', function() {
+    expect(router().addRoutes).to.be.a('function');
+  });
+});
+
+describe('addRoutes({path: view})', function() {
+  it('calls addRoute for each key/value pair', function() {
+    var routes = router();
+    var routeMap = {
+      '/': function a() {},
+      '/foo': function b() {},
+      '/bar/qux': function c() {}
+    };
+    var pairs = {};
+    routes.addRoute = function(path, view) {
+      expect(routeMap).to.have.property(path, view);
+      pairs[path] = view;
+    };
+    routes.addRoutes(routeMap);
+    expect(routeMap).to.eql(pairs);
+  });
+});
+
+describe('addRoutes([[path, view]])', function() {
+  it('calls addRoute for each pair in sequence', function() {
+    var routes = router();
+    var routeList = [
+      ['/', function a() {}],
+      ['/foo', function b() {}],
+      ['/bar/qux', function c() {}]
+    ];
+    var pairs = [];
+    routes.addRoute = function(path, view) {
+      expect(routeList.length).to.be.greaterThan(pairs.length);
+      expect(routeList[pairs.length]).to.eql([path, view]);
+      pairs.push([path, view]);
+    };
+    routes.addRoutes(routeList);
+    expect(routeList).to.eql(pairs);
+  });
 });
 
 describe('request as string', function() {

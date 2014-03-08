@@ -44,6 +44,16 @@ var routes = require('routes-http')()
 routes(req, res);
 ```
 
+Or simply:
+
+```javascript
+var routes = require('routes-http')().addRoutes({
+    '/foo': function(req, res) {/* … */},
+    '/bar': function(req, res) {/* … */},
+    '/qux': function(req, res) {/* … */}
+});
+```
+
 ## Semantic error-handling
 
 *routes-http* uses [httperr](https://github.com/pluma/httperr) for its own errors and allows you to provide an error handler that will be used for all errors, including matching errors:
@@ -232,6 +242,27 @@ childRoutes.addRoute('/*', function(req, res, opts) {/* … */});
 routes.addRoute('/*/foo/', childRoutes);
 routes({url: '/qux/foo/bar'}); // opts.splats = ['qux', 'bar']
 ```
+
+## routes.addRoutes({path: view})
+
+Invokes `routes.addRoute` for each key/value pair.
+
+Note that because JavaScript object key order can not be guaranteed this is not recommended if you have paths that depend on the resolution order.
+
+Example:
+
+The following may produce inconsistent results:
+
+```javascript
+routes.addRoutes({
+    '/:foo/': function(req, res, opts) {/* … */},
+    '/:bar/': function(req, res, opts) {/* … */}
+});
+```
+
+## routes.addRoutes([[path:String, view]])
+
+Invokes `routes.addRoute` for each pair of `path` and `view` in the given array.
 
 ## routes.addRoute(path:String, view:Function)
 
