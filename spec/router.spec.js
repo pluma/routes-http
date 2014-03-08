@@ -193,6 +193,25 @@ describe('route with sub-routes', function() {
     });
     routes(req0, res0, callback);
   });
+  it('resolves root sub-routes', function(done) {
+    var routes = router(),
+      child = router(),
+      req0 = {url: '/foo/'},
+      res0 = {},
+      callback = function() {};
+    routes.addRoute('/foo/', child);
+    child.addRoute('/', function(req, res, opts, cb) {
+      expect(req).to.equal(req0);
+      expect(res).to.equal(res0);
+      expect(opts).to.eql({
+        params: {},
+        splats: []
+      });
+      expect(cb).to.equal(callback);
+      done();
+    });
+    routes(req0, res0, callback);
+  });
   it('resolves duplicate params', function(done) {
     var routes = router(),
       child = router(),

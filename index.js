@@ -1,4 +1,4 @@
-/*! routes-http 0.4.2 Original author Alan Plum <me@pluma.io>. Released into the Public Domain under the UNLICENSE. @preserve */
+/*! routes-http 0.5.0 Original author Alan Plum <me@pluma.io>. Released into the Public Domain under the UNLICENSE. @preserve */
 var httperr = require('httperr');
 var router = require('routes');
 var parseUrl = require('url').parse;
@@ -10,6 +10,16 @@ module.exports = function() {
   handleRequest._router = routes;
   handleRequest.addRoute = function(path, fn) {
     if (fn.addRoute) {
+      routes.addRoute(path, function(req, res, opts, handleError) {
+        if (typeof opts === 'function') {
+          handleError = opts;
+          opts = undefined;
+        }
+        opts = opts || {};
+        opts.splats = opts.splats || [];
+        opts.splats.unshift('/');
+        return fn(req, res, opts, handleError);
+      });
       path += '*';
     }
     routes.addRoute(path, fn);

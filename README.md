@@ -203,7 +203,9 @@ make test
 
 Resolves the given request and invokes the matching view if possible.
 
-If a `handleError` function is passed, the function will be called with the `Error` object if an error is thrown by the view.
+If the route can not be resolved, a `404 Not Found` error will be raised.
+
+If a `handleError` function is passed, the function will be called with the `Error` object if an error is thrown by the view or the route resolution fails.
 
 The matched view will be invoked with the following arguments:
 
@@ -268,8 +270,6 @@ Invokes `routes.addRoute` for each pair of `path` and `view` in the given array.
 
 Adds a route with the given path. The route will resolve to the given function, invoking it when the route is matched.
 
-If the route can not be resolved, a `404 Not Found` error will be raised.
-
 ## routes.addRoute(path:String, view:Object)
 
 Adds a route with the given path. The object is expected to have methods named after the HTTP methods supported by the view that will be invoked when the route is matched with the respective HTTP method.
@@ -298,6 +298,9 @@ Example:
 ```javascript
 childRoutes.addRoute('/bar', function(req, res) {
     res.end('You have accessed /foo/bar !');
+});
+childRoutes.addRoute('/', function(req, res) {
+    res.end('You have accessed /foo/ !');
 });
 routes.addRoute('/foo/', childRoutes); // Always use a trailing slash!
 ```
