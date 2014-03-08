@@ -93,6 +93,13 @@ describe('route with plain function', function() {
     });
     routes(req0, res0);
   });
+  it('normalizes the path', function(done) {
+    var routes = router();
+    routes.addRoute('/foo/bar', function() {
+      done();
+    });
+    routes({url: 'http://localhost//foo/bar'});
+  });
   it('passes along the failure callback', function(done) {
     var routes = router(),
       callback = function() {};

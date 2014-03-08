@@ -1,7 +1,8 @@
-/*! routes-http 0.4.0 Original author Alan Plum <me@pluma.io>. Released into the Public Domain under the UNLICENSE. @preserve */
+/*! routes-http 0.4.1 Original author Alan Plum <me@pluma.io>. Released into the Public Domain under the UNLICENSE. @preserve */
 var httperr = require('httperr');
 var router = require('routes');
 var parseUrl = require('url').parse;
+var normalize = require('path').normalize;
 
 module.exports = function() {
   var routes = router();
@@ -48,7 +49,7 @@ module.exports = function() {
       } else {
         pathname = parseUrl(req.url).pathname;
       }
-      var route = routes.match(pathname);
+      var route = routes.match(normalize(pathname));
       if (!route) {
         throw httperr.notFound();
       }
