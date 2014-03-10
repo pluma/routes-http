@@ -36,7 +36,7 @@
 
 <p><strong>routes-http</strong> is a simple HTTP request router for node.js based on <a href="https://github.com/aaronblohowiak/routes.js">routes</a>.</p>
 
-<p><a href="http://nodejs.org/api/documentation.html#documentation_stability_index"><img src="http://b.repl.ca/v1/stability-2_--_unstable-yellow.png" alt="stability 2 - unstable"></a> <a href="http://unlicense.org/"><img src="http://b.repl.ca/v1/license-Unlicense-lightgrey.png" alt="license - Unlicense"></a></p>
+<p><a href="http://nodejs.org/api/documentation.html#documentation_stability_index"><img src="http://b.repl.ca/v1/stability-2_--_unstable-yellow.png" alt="stability 2 - unstable"></a> <a href="http://unlicense.org/"><img src="http://b.repl.ca/v1/license-Unlicense-lightgrey.png" alt="license - Unlicense"></a> <a href="https://flattr.com/submit/auto?user_id=pluma&amp;url=https://github.com/pluma/routes-http"><img src="https://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this"></a></p>
 
 <p><a href="https://travis-ci.org/pluma/routes-http"><img src="https://travis-ci.org/pluma/routes-http.png?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/pluma/routes-http?branch=master"><img src="https://coveralls.io/repos/pluma/routes-http/badge.png?branch=master" alt="Coverage Status"></a> <a href="https://david-dm.org/pluma/routes-http"><img src="https://david-dm.org/pluma/routes-http.png?theme=shields.io" alt="Dependencies"></a></p>
 
@@ -76,6 +76,15 @@
     <span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/qux'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">});</span>
 <span class="c1">// … more code …</span>
 <span class="nx">routes</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+</pre></div>
+
+<p>Or simply:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'routes-http'</span><span class="p">)().</span><span class="nx">addRoutes</span><span class="p">({</span>
+    <span class="s1">'/foo'</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">},</span>
+    <span class="s1">'/bar'</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">},</span>
+    <span class="s1">'/qux'</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">}</span>
+<span class="p">});</span>
 </pre></div>
 
 <h2>
@@ -227,7 +236,9 @@ make <span class="nb">test</span>
 
 <p>Resolves the given request and invokes the matching view if possible.</p>
 
-<p>If a <code>handleError</code> function is passed, the function will be called with the <code>Error</code> object if an error is thrown by the view.</p>
+<p>If the route can not be resolved, a <code>404 Not Found</code> error will be raised.</p>
+
+<p>If a <code>handleError</code> function is passed, the function will be called with the <code>Error</code> object if an error is thrown by the view or the route resolution fails.</p>
 
 <p>The matched view will be invoked with the following arguments:</p>
 
@@ -271,11 +282,31 @@ make <span class="nb">test</span>
 </pre></div>
 
 <h2>
+<a name="routesaddroutespath-view" class="anchor" href="#routesaddroutespath-view"><span class="octicon octicon-link"></span></a>routes.addRoutes({path: view})</h2>
+
+<p>Invokes <code>routes.addRoute</code> for each key/value pair.</p>
+
+<p>Note that because JavaScript object key order can not be guaranteed this is not recommended if you have paths that depend on the resolution order.</p>
+
+<p>Example:</p>
+
+<p>The following may produce inconsistent results:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">routes</span><span class="p">.</span><span class="nx">addRoutes</span><span class="p">({</span>
+    <span class="s1">'/:foo/'</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">opts</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">},</span>
+    <span class="s1">'/:bar/'</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">opts</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* … */</span><span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="routesaddroutespathstring-view" class="anchor" href="#routesaddroutespathstring-view"><span class="octicon octicon-link"></span></a>routes.addRoutes([[path:String, view]])</h2>
+
+<p>Invokes <code>routes.addRoute</code> for each pair of <code>path</code> and <code>view</code> in the given array.</p>
+
+<h2>
 <a name="routesaddroutepathstring-viewfunction" class="anchor" href="#routesaddroutepathstring-viewfunction"><span class="octicon octicon-link"></span></a>routes.addRoute(path:String, view:Function)</h2>
 
 <p>Adds a route with the given path. The route will resolve to the given function, invoking it when the route is matched.</p>
-
-<p>If the route can not be resolved, a <code>404 Not Found</code> error will be raised.</p>
 
 <h2>
 <a name="routesaddroutepathstring-viewobject" class="anchor" href="#routesaddroutepathstring-viewobject"><span class="octicon octicon-link"></span></a>routes.addRoute(path:String, view:Object)</h2>
@@ -305,6 +336,9 @@ make <span class="nb">test</span>
 
 <div class="highlight highlight-javascript"><pre><span class="nx">childRoutes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/bar'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">'You have accessed /foo/bar !'</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">childRoutes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s1">'You have accessed /foo/ !'</span><span class="p">);</span>
 <span class="p">});</span>
 <span class="nx">routes</span><span class="p">.</span><span class="nx">addRoute</span><span class="p">(</span><span class="s1">'/foo/'</span><span class="p">,</span> <span class="nx">childRoutes</span><span class="p">);</span> <span class="c1">// Always use a trailing slash!</span>
 </pre></div>
