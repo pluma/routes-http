@@ -3,7 +3,7 @@
 **routes-http** is a simple HTTP request router for node.js based on [routes](https://github.com/aaronblohowiak/routes.js).
 
 [![stability 2 - unstable](http://b.repl.ca/v1/stability-2_--_unstable-yellow.png)
-](http://nodejs.org/api/documentation.html#documentation_stability_index) [![license - Unlicense](http://b.repl.ca/v1/license-Unlicense-lightgrey.png)](http://unlicense.org/)
+](http://nodejs.org/api/documentation.html#documentation_stability_index) [![license - Unlicense](http://b.repl.ca/v1/license-Unlicense-lightgrey.png)](http://unlicense.org/) [![Flattr this](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=pluma&url=https://github.com/pluma/routes-http)
 
 [![Build Status](https://travis-ci.org/pluma/routes-http.png?branch=master)](https://travis-ci.org/pluma/routes-http) [![Coverage Status](https://coveralls.io/repos/pluma/routes-http/badge.png?branch=master)](https://coveralls.io/r/pluma/routes-http?branch=master) [![Dependencies](https://david-dm.org/pluma/routes-http.png?theme=shields.io)](https://david-dm.org/pluma/routes-http)
 
