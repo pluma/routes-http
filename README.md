@@ -1,3 +1,5 @@
+**NOTE:** This package is no longer being maintained. If you are interested in taking over as maintainer or are interested in the npm package name, get in touch by creating an issue.
+
 # Synopsis
 
 **routes-http** is a simple HTTP request router for node.js based on [routes](https://github.com/aaronblohowiak/routes.js).
